@@ -9,15 +9,38 @@ float dlineboxX1, dlineboxY1, dlineboxX2, dlineboxY2;
 float lineboxX1, lineboxY1, lineboxX2, lineboxY2;
 float dline1X1, dline1Y1, dline1Diameter, dline2X1, dline2Y1, dline2Diameter, dline3X1, dline3Y1, dline3Diameter;
 float lineX1, lineY1, lineX2, lineY2;
+float background1X1, background1Y1, background1X2, background1Y2;
+float background2X1, background2Y1, background2X2, background2Y2;
+float tb1X1, tb1Y1, tb1X2, tb1Y2;
+float tb2X1, tb2Y1, tb2X2, tb2Y2;
+float tb3X1, tb3Y1, tb3X2, tb3Y2;
+float tb4X1, tb4Y1, tb4X2, tb4Y2;
+float tb5X1, tb5Y1, tb5X2, tb5Y2;
 
 void setup() {
   fullScreen();
+  fill(0);
+   background1X1 = width*3/4;
+  background1Y1 = height*0/5;
+  background1X2 = width*1/4;
+  background1Y2 = height*5/5;
+
+  background2X1 = width*0/4;
+  background2Y1 =height*4/5;
+  background2X2 = width*3/4;
+  background2Y2 =height*1/5;
+  
   quitButtonSetup();
   drawingSurfaceX = width*0;
   drawingSurfaceY = height*0;
   drawingSurfaceWidth = width*3/4;
   drawingSurfaceHeight = height*4/5;
-  //                                                                                               Color Choosers
+  fill(255);
+ 
+
+
+  
+  //Color Choosers
   
   cbox1X1 = width*49/64;
   cbox1Y1 = height*2/30;
@@ -113,26 +136,31 @@ void setup() {
   dline3Y1 =height*9/30;
   dline3Diameter =9;
   
-  
-  
-  
+lineX1 =width*119/132;
+lineY1 =height*26/88;
+lineX2 =50;
+lineY2 =10;
   
   
 
 
   rect(drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight);
+  
 }
 
 
 
 void draw() {
   quitButtonDraw();
-
+  rect(background1X1, background1Y1, background1X2, background1Y2);
+  rect(background2X1, background2Y1, background2X2, background2Y2);
   if (draw == true) {
     fill(ink);
     ellipse(mouseX, mouseY, drawingDiameter, drawingDiameter);
   }
+  
   //     Color Choosers Rect lines
+
   fill(black);
 rect(cbox1X1, cbox1Y1, cbox1X2, cbox1Y2);
 
@@ -201,6 +229,7 @@ rect(lineboxX1, lineboxY1, lineboxX2, lineboxY2);
 ellipse(dline1X1, dline1Y1, dline1Diameter, dline1Diameter);
 ellipse(dline2X1, dline2Y1, dline2Diameter, dline2Diameter);
 ellipse(dline3X1, dline3Y1, dline3Diameter, dline3Diameter);
+rect(lineX1, lineY1, lineX2, lineY2);
 }
 
 void mousePressed() {
