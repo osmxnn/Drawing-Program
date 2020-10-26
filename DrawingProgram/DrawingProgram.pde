@@ -202,7 +202,7 @@ void setup() {
 
 void draw() {
 
-  quitButtonDraw();
+ 
   if (draw == true) {
     fill(ink);
     ellipse(mouseX, mouseY, drawingDiameter, drawingDiameter);
@@ -210,6 +210,7 @@ void draw() {
   fill(white);
   rect(background1X1, background1Y1, background1X2, background1Y2);
   rect(background2X1, background2Y1, background2X2, background2Y2);
+  quitButtonDraw();
   //     Color Choosers Rect lines
 
   fill(black);
