@@ -1,3 +1,12 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+
+Minim minim;
 color ink, black=#000000;
 float drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight;
 float drawingDiameter;
@@ -26,9 +35,17 @@ float circleTH4X1, circleTH4Y1, circleTH4Diameter;
 float circleTH5X1, circleTH5Y1, circleTH5Diameter;
 float LineThickness;
 float PauseButtonX1, PauseButtonY1, PauseButtonDiameter;
-
+float pbInternalX1, pbInternalY1, pbInternalX2, pbInternalY2;
+float pbInternal2X1, pbInternal2Y1, pbInternal2X2, pbInternal2Y2;
+int numberOfSongs = 1;
+AudioPlayer[] song = new AudioPlayer[numberOfSongs];
+AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 void setup() {
-  size(1200, 800);
+  size(1200, 700);
+  
+  minim = new Minim(this);
+  song[0] = minim.loadFile("jump man 93 - oldbandstuffs 1 (128 kbps).mp3");
+  
   fill(0);
   background1X1 = width*3/4;
   background1Y1 = height*0/5;
@@ -201,6 +218,15 @@ PauseButtonX1 = width*175/200;
 PauseButtonY1 = height*130/160;
 PauseButtonDiameter = 100;
 
+pbInternalX1 =width*171/200;
+pbInternalY1 =height*123/160;
+pbInternalX2 = 15;
+pbInternalY2 = 60;
+
+pbInternal2X1 =width*176/200;
+pbInternal2Y1 =height*123/160;
+pbInternal2X2 = 15;
+pbInternal2Y2 = 60;
   rect(drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight);
 }
 
@@ -302,9 +328,10 @@ void draw() {
   ellipse(circleTH5X1, circleTH5Y1, circleTH5Diameter, circleTH5Diameter);
   fill(black);
   fill(white);
-   rect(width*170/200, height*125/160,90,90);
+   //rect(width*167/200, height*119/160,95,95);
   ellipse(PauseButtonX1, PauseButtonY1, PauseButtonDiameter, PauseButtonDiameter);
- 
+  rect(pbInternalX1, pbInternalY1, pbInternalX2, pbInternalY2);
+ rect(pbInternal2X1, pbInternal2Y1, pbInternal2X2, pbInternal2Y2);
 
   String title0 = "ERASER";
   PFont titleFont0;
@@ -500,10 +527,23 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     ink = brown; // example to change ink
     drawingDiameter = width*1/100;
   }
+  /*
   if ( mouseX>lineTH1X1  && mouseX<lineTH1X1+lineTH1X2  && mouseY>lineTH1Y1 && mouseY<lineTH1Y1+lineTH1Y2);
   strokeWeight(LineThickness);
   LineThickness = 2;
   if ( mouseX>lineTH2X1  && mouseX<lineTH2X1+lineTH2X2  && mouseY>lineTH2Y1 && mouseY<lineTH2Y1+lineTH2Y2);
   strokeWeight(LineThickness);
   LineThickness = 4;
+ */
+//                                             PAUSE BUTTON 
+if (mouseX>width*167/200 && mouseX< width*167/200+95&& mouseY> height*119/160 && mouseY<height*119/160+95) {   //pause
+    if ( song[0].isPlaying() ) {
+      song[0].pause();
+    } else if ( song[0].position() == song[0].length()) {
+      song[0].rewind();
+      song[0].play();
+    } else {
+      song[0].play();
+    }
+}
 }
