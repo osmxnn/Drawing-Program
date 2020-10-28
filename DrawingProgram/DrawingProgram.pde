@@ -346,9 +346,10 @@ void mousePressed() {
   quitButtonMouseClicked();
   fill(white);
   if ( mouseX>drawingSurfaceX  && mouseX<drawingSurfaceX+drawingSurfaceWidth  && mouseY>drawingSurfaceY && mouseY<drawingSurfaceY+drawingSurfaceHeight) {
-    println("drawing surface");
+    ink = white;
+   println("drawing surface");
     if (draw == false) {
-      draw = true;
+     draw = true;
     } else {
       draw = false;
     }
@@ -359,10 +360,10 @@ void mousePressed() {
   if ( mouseX>eraserboxX1  && mouseX<eraserboxX1+eraserboxX2  && mouseY>eraserboxY1 && mouseY<eraserboxY1+eraserboxY2) {
     println("eraser");
     if (draw == false) {
-      draw = true;
+    draw = true;
       // draw = false;
     } else {
-      draw = false;
+      draw = true;
     }
     ink = white; // example to change ink
     drawingDiameter = width*1/100;
@@ -373,7 +374,7 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
       draw = true;
       // draw = false;
     } else {
-      draw = false;
+      draw = true;
     }
     ink = black; // example to change ink
     drawingDiameter = width*1/100;
@@ -383,10 +384,10 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
   if ( mouseX>cbox2X1  && mouseX<cbox2X1+cbox2X2  && mouseY>cbox2Y1 && mouseY<cbox2Y1+cbox2Y2) {
     println("Red");
     if (draw == false) {
-      draw = true;
-      // draw = false;
+   draw = true;
+      
     } else {
-      draw = false;
+      draw = true;
     }
     ink = red; // example to change ink
     drawingDiameter = width*1/100;
