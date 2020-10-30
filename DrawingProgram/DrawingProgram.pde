@@ -16,7 +16,8 @@ boolean blackink, redink, whiteink, dblueink, lblueink, greenink, yellowink, ora
 color white=255, red=#FF0329, dblue=#0308FF, lblue=#24d9ff, green=#23FF03, yellow=#FFF303, orange=#F39C12, grey=#7B7D7D, brown = #8B4513, dgreen=#576E35, crimson=#A93226, pink=#ffb8c6, purplex=#d700f7, jgreen=#007e61;
 float dlineboxX1, dlineboxY1, dlineboxX2, dlineboxY2;
 boolean thickness1, thickness2, thickness3, thickness4, thickness5;
-float eraserboxX1, eraserboxY1, eraserboxX2, eraserboxY2;
+boolean image;
+float imagebuttonX1, imagebuttonY1, imagebuttonX2, imagebuttonY2;
 float dline1X1, dline1Y1, dline1Diameter, dline2X1, dline2Y1, dline2Diameter, dline3X1, dline3Y1, dline3Diameter;
 float background1X1, background1Y1, background1X2, background1Y2;
 float background2X1, background2Y1, background2X2, background2Y2;
@@ -36,6 +37,9 @@ float circleTH3X1, circleTH3Y1, circleTH3Diameter;
 float circleTH4X1, circleTH4Y1, circleTH4Diameter;
 float circleTH5X1, circleTH5Y1, circleTH5Diameter;
 float LineThickness;
+float imageStartWidth, imageStartHeight, imageWidth, imageHeight;
+float imageWidthRatio, imageHeightRatio;
+PImage pic;
 float PauseButtonX1, PauseButtonY1, PauseButtonDiameter;
 float pbInternalX1, pbInternalY1, pbInternalX2, pbInternalY2;
 float pbInternal2X1, pbInternal2Y1, pbInternal2X2, pbInternal2Y2;
@@ -44,6 +48,14 @@ AudioPlayer[] song = new AudioPlayer[numberOfSongs];
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 void setup() {
   size(1200, 700);
+  
+   pic = loadImage("https://kidsactivitiesblog--o--com.follycdn.com/wp-content/uploads/2020/03/KAB-Anime-Coloring-Page-for-Kids-.jpg");
+  imageWidthRatio = 1200.0/630.0;
+  imageHeightRatio = 1200.0/1200.0;
+  imageStartWidth = width*0/4;
+  imageStartHeight = height*0/5;
+  imageWidth = width*3/4;
+  imageHeight = height*4/5;
   
   minim = new Minim(this);
   song[0] = minim.loadFile("jump man 93 - oldbandstuffs 1 (128 kbps).mp3");
@@ -148,10 +160,10 @@ void setup() {
   dlineboxX2 = 85;
   dlineboxY2 = 55;
   //                                                     eraser boxes
-  eraserboxX1 = width*57/64;
-  eraserboxY1 = height*8/30;
-  eraserboxX2 = 85;
-  eraserboxY2 = 55;
+  imagebuttonX1 = width*57/64;
+  imagebuttonY1 = height*8/30;
+  imagebuttonX2 = 85;
+  imagebuttonY2 = 55;
   //                                                       dotted line
   dline1X1 =width*102/128;
   dline1Y1 =height*9/30;
@@ -311,7 +323,7 @@ strokeWeight(1);
   //                                                                  dotted line boxes rect
   rect(dlineboxX1, dlineboxY1, dlineboxX2, dlineboxY2);
   //                                                                         line boxes
-  rect(eraserboxX1, eraserboxY1, eraserboxX2, eraserboxY2);
+  rect(imagebuttonX1, imagebuttonY1, imagebuttonX2, imagebuttonY2);
   //                                                                           dotted lines
   ellipse(dline1X1, dline1Y1, dline1Diameter, dline1Diameter);
   ellipse(dline2X1, dline2Y1, dline2Diameter, dline2Diameter);
@@ -388,6 +400,7 @@ strokeWeight(1);
   if (jgreenink == true) {
     ink =jgreen ;
   }
+  
   /*
   if (thickness1 == true) {
     LineThickness = 1;
@@ -404,9 +417,18 @@ strokeWeight(1);
   if (thickness5 == true) {
     LineThickness = 9;
   } */
+  
+
 }
 
 void mousePressed() {
+    if (image == true) {
+    rect(imageStartWidth, imageStartHeight, imageWidth, imageHeight);
+    image (pic, imageStartWidth, imageStartHeight, imageWidth, imageHeight);
+    } else {
+      image = false;
+  }
+  
   quitButtonMouseClicked();
   fill(white);
   if ( mouseX>drawingSurfaceX  && mouseX<drawingSurfaceX+drawingSurfaceWidth  && mouseY>drawingSurfaceY && mouseY<drawingSurfaceY+drawingSurfaceHeight) {
@@ -421,16 +443,9 @@ void mousePressed() {
     drawingDiameter = width*1/100;
   }
 
-  if ( mouseX>eraserboxX1  && mouseX<eraserboxX1+eraserboxX2  && mouseY>eraserboxY1 && mouseY<eraserboxY1+eraserboxY2) {
-    println("eraser");
-    if (draw == false) {
-    draw = true;
-      // draw = false;
-    } else {
-      draw = true;
-    }
-    ink = white; // example to change ink
-    drawingDiameter = width*1/100;
+  if ( mouseX>imagebuttonX1  && mouseX<imagebuttonX1+imagebuttonX2  && mouseY>imagebuttonY1 && mouseY<imagebuttonY1+imagebuttonY2) {
+    println("image");
+    image = true;
   }
 if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox1Y1+cbox1Y2) {
     println("Black");
@@ -695,6 +710,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
   if ( mouseX>lineTH1X1  && mouseX<lineTH1X1+lineTH1X2  && mouseY>lineTH1Y1 && mouseY<lineTH1Y1+lineTH1Y2); {
   
   LineThickness = 1;
+  
+    
   }
   
   if ( mouseX>lineTH2X1  && mouseX<lineTH2X1+lineTH2X2  && mouseY>lineTH2Y1 && mouseY<lineTH2Y1+lineTH2Y2); {
