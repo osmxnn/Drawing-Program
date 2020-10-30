@@ -12,8 +12,10 @@ float drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeigh
 float drawingDiameter;
 float cbox1X1, cbox1Y1, cbox1X2, cbox1Y2, cbox2X1, cbox2Y1, cbox2X2, cbox2Y2, cbox3X1, cbox3Y1, cbox3X2, cbox3Y2, cbox4X1, cbox4Y1, cbox4X2, cbox4Y2, cbox5X1, cbox5Y1, cbox5X2, cbox5Y2, cbox6X1, cbox6Y1, cbox6X2, cbox6Y2, cbox7X1, cbox7Y1, cbox7X2, cbox7Y2, cbox8X1, cbox8Y1, cbox8X2, cbox8Y2, cbox9X1, cbox9Y1, cbox9X2, cbox9Y2, cbox10X1, cbox10Y1, cbox10X2, cbox10Y2, cbox11X1, cbox11Y1, cbox11X2, cbox11Y2, cbox12X1, cbox12Y1, cbox12X2, cbox12Y2, cbox13X1, cbox13Y1, cbox13X2, cbox13Y2, cbox14X1, cbox14Y1, cbox14X2, cbox14Y2;
 Boolean draw=false, eraser=false;
+boolean blackink, redink, whiteink, dblueink, lblueink, greenink, yellowink, orangeink, greyink, brownink, dgreenink, crimsonink, pinkink, purpleink, jgreenink;
 color white=255, red=#FF0329, dblue=#0308FF, lblue=#24d9ff, green=#23FF03, yellow=#FFF303, orange=#F39C12, grey=#7B7D7D, brown = #8B4513, dgreen=#576E35, crimson=#A93226, pink=#ffb8c6, purplex=#d700f7, jgreen=#007e61;
 float dlineboxX1, dlineboxY1, dlineboxX2, dlineboxY2;
+boolean thickness1, thickness2, thickness3, thickness4, thickness5;
 float eraserboxX1, eraserboxY1, eraserboxX2, eraserboxY2;
 float dline1X1, dline1Y1, dline1Diameter, dline2X1, dline2Y1, dline2Diameter, dline3X1, dline3Y1, dline3Diameter;
 float background1X1, background1Y1, background1X2, background1Y2;
@@ -234,15 +236,15 @@ pbInternal2Y2 = 60;
 
 void draw() {
 
-  stroke(LineThickness);
+  
   if (draw == true) {
     fill(ink);
-
+strokeWeight(LineThickness);
     stroke(ink);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
   
-
+strokeWeight(1);
   stroke(black);
   fill(white);
   rect(background1X1, background1Y1, background1X2, background1Y2);
@@ -314,7 +316,7 @@ void draw() {
   ellipse(dline1X1, dline1Y1, dline1Diameter, dline1Diameter);
   ellipse(dline2X1, dline2Y1, dline2Diameter, dline2Diameter);
   ellipse(dline3X1, dline3Y1, dline3Diameter, dline3Diameter);
-  strokeWeight(4);
+  strokeWeight(1);
   rect(lineTH1X1, lineTH1Y1, lineTH1X2, lineTH1Y2);
   rect(lineTH2X1, lineTH2Y1, lineTH2X2, lineTH2Y2);
   rect(lineTH3X1, lineTH3Y1, lineTH3X2, lineTH3Y2);
@@ -340,20 +342,82 @@ void draw() {
   textAlign(CENTER, CENTER);
   textFont(titleFont0, 15);
   fill(white);
+  
+  if (redink == true) {
+    ink = red;
+  }
+  if (blackink == true) {
+    ink = black;
+  }
+  if (whiteink == true) {
+    ink =white ;
+  }
+  if (dblueink == true) {
+    ink =dblue ;
+  }
+  if (lblueink == true) {
+    ink =lblue;
+  }
+  if (greenink == true) {
+    ink =green ;
+  }
+  if (yellowink == true) {
+    ink =yellow ;
+  }
+  if (orangeink == true) {
+    ink =orange ;
+  }
+  if (greyink == true) {
+    ink =grey ;
+  } 
+  if (brownink == true) {
+    ink =brown ;
+  }
+  if (dgreenink == true) {
+    ink =dgreen ;
+  }
+  if (crimsonink == true) {
+    ink =crimson ;
+  }
+  if (pinkink == true) {
+    ink =pink ;
+  }
+  if (purpleink == true) {
+    ink =purplex ;
+  }
+  if (jgreenink == true) {
+    ink =jgreen ;
+  }
+  /*
+  if (thickness1 == true) {
+    LineThickness = 1;
+  }
+  if (thickness2 == true) {
+    LineThickness = 3;
+  }
+  if (thickness3 == true) {
+    LineThickness = 5;
+  }
+  if (thickness4 == true) {
+    LineThickness = 7;
+  }
+  if (thickness5 == true) {
+    LineThickness = 9;
+  } */
 }
 
 void mousePressed() {
   quitButtonMouseClicked();
   fill(white);
   if ( mouseX>drawingSurfaceX  && mouseX<drawingSurfaceX+drawingSurfaceWidth  && mouseY>drawingSurfaceY && mouseY<drawingSurfaceY+drawingSurfaceHeight) {
-    ink = white;
+    
    println("drawing surface");
     if (draw == false) {
      draw = true;
     } else {
       draw = false;
     }
-    ink = black; // example to change ink
+     // example to change ink
     drawingDiameter = width*1/100;
   }
 
@@ -370,172 +434,286 @@ void mousePressed() {
   }
 if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox1Y1+cbox1Y2) {
     println("Black");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = true;
-    }
-    ink = black; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=true;
   }
  
   
   if ( mouseX>cbox2X1  && mouseX<cbox2X1+cbox2X2  && mouseY>cbox2Y1 && mouseY<cbox2Y1+cbox2Y2) {
     println("Red");
-    if (draw == false) {
-   draw = true;
-      
-    } else {
-      draw = true;
-    }
-    ink = red; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=true;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
+    
   }
   
   if ( mouseX>cbox3X1  && mouseX<cbox3X1+cbox3X2  && mouseY>cbox3Y1 && mouseY<cbox3Y1+cbox3Y2) {
     println("Dark Blue");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = dblue; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=true;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   
   if ( mouseX>cbox4X1  && mouseX<cbox4X1+cbox4X2  && mouseY>cbox4Y1 && mouseY<cbox4Y1+cbox4Y2) {
     println("Light Blue");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = lblue; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=true;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   
   if ( mouseX>cbox5X1  && mouseX<cbox5X1+cbox5X2  && mouseY>cbox5Y1 && mouseY<cbox5Y1+cbox5Y2) {
     println("Yellow");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = yellow; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=true;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   
   if ( mouseX>cbox6X1  && mouseX<cbox6X1+cbox6X2  && mouseY>cbox6Y1 && mouseY<cbox6Y1+cbox6Y2) {
     println("Orange");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = orange; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=true;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox7X1  && mouseX<cbox7X1+cbox7X2  && mouseY>cbox7Y1 && mouseY<cbox7Y1+cbox7Y2) {
     println("Grey");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = grey; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=true;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox8X1  && mouseX<cbox8X1+cbox8X2  && mouseY>cbox8Y1 && mouseY<cbox8Y1+cbox8Y2) {
     println("White");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = white; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=true;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox9X1  && mouseX<cbox9X1+cbox9X2  && mouseY>cbox9Y1 && mouseY<cbox9Y1+cbox9Y2) {
     println("Green");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = green; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=true;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox10X1  && mouseX<cbox10X1+cbox10X2  && mouseY>cbox10Y1 && mouseY<cbox10Y1+cbox10Y2) {
     println("Crimson");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = crimson; // example to change ink
-    drawingDiameter = width*1/100;
+   whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=true;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox11X1  && mouseX<cbox11X1+cbox11X2  && mouseY>cbox11Y1 && mouseY<cbox11Y1+cbox11Y2) {
     println("Pink");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = pink; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=true;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox12X1  && mouseX<cbox12X1+cbox12X2  && mouseY>cbox12Y1 && mouseY<cbox12Y1+cbox12Y2) {
     println("Jungle Green");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = jgreen; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=true;
+    blackink=false;
   }
   if ( mouseX>cbox13X1  && mouseX<cbox13X1+cbox13X2  && mouseY>cbox13Y1 && mouseY<cbox13Y1+cbox13Y2) {
     println("Purple");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = purplex; // example to change ink
-    drawingDiameter = width*1/100;
+   whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=false;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=true;
+    jgreenink=false;
+    blackink=false;
   }
   if ( mouseX>cbox14X1  && mouseX<cbox14X1+cbox14X2  && mouseY>cbox14Y1 && mouseY<cbox14Y1+cbox14Y2) {
     println("Brown");
-    if (draw == false) {
-      draw = true;
-      // draw = false;
-    } else {
-      draw = false;
-    }
-    ink = brown; // example to change ink
-    drawingDiameter = width*1/100;
+    whiteink=false;
+    redink=false;
+    dblueink=false;
+    lblueink=false;
+    greenink=false;
+    yellowink=false;
+    orangeink=false;
+    greyink=false;
+    brownink=true;
+    dgreenink=false;
+    crimsonink=false;
+    pinkink=false;
+    purpleink=false;
+    jgreenink=false;
+    blackink=false;
   }
-  /*
-  if ( mouseX>lineTH1X1  && mouseX<lineTH1X1+lineTH1X2  && mouseY>lineTH1Y1 && mouseY<lineTH1Y1+lineTH1Y2);
-  strokeWeight(LineThickness);
-  LineThickness = 2;
-  if ( mouseX>lineTH2X1  && mouseX<lineTH2X1+lineTH2X2  && mouseY>lineTH2Y1 && mouseY<lineTH2Y1+lineTH2Y2);
-  strokeWeight(LineThickness);
-  LineThickness = 4;
- */
+  
+  if ( mouseX>lineTH1X1  && mouseX<lineTH1X1+lineTH1X2  && mouseY>lineTH1Y1 && mouseY<lineTH1Y1+lineTH1Y2); {
+  
+  LineThickness = 1;
+  }
+  
+  if ( mouseX>lineTH2X1  && mouseX<lineTH2X1+lineTH2X2  && mouseY>lineTH2Y1 && mouseY<lineTH2Y1+lineTH2Y2); {
+
+  LineThickness = 3;
+  
+  }
+  if ( mouseX>lineTH3X1  && mouseX<lineTH3X1+lineTH1X2  && mouseY>lineTH3Y1 && mouseY<lineTH3Y1+lineTH3Y2);{
+  
+  LineThickness = 5;
+  }
+  if ( mouseX>lineTH4X1  && mouseX<lineTH4X1+lineTH2X2  && mouseY>lineTH4Y1 && mouseY<lineTH4Y1+lineTH4Y2);{
+
+  LineThickness = 7;
+  }
+  if ( mouseX>lineTH5X1  && mouseX<lineTH5X1+lineTH2X2  && mouseY>lineTH5Y1 && mouseY<lineTH5Y1+lineTH5Y2); {
+
+ LineThickness = 9;
+  }
 //                                             PAUSE BUTTON 
 if (mouseX>width*167/200 && mouseX< width*167/200+95&& mouseY> height*119/160 && mouseY<height*119/160+95) {   //pause
     if ( song[0].isPlaying() ) {
