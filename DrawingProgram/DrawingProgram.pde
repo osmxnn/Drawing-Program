@@ -14,7 +14,7 @@ float cbox1X1, cbox1Y1, cbox1X2, cbox1Y2, cbox2X1, cbox2Y1, cbox2X2, cbox2Y2, cb
 Boolean draw=false, eraser=false;
 boolean blackink, redink, whiteink, dblueink, lblueink, greenink, yellowink, orangeink, greyink, brownink, dgreenink, crimsonink, pinkink, purpleink, jgreenink;
 color white=255, red=#FF0329, dblue=#0308FF, lblue=#24d9ff, green=#23FF03, yellow=#FFF303, orange=#F39C12, grey=#7B7D7D, brown = #8B4513, dgreen=#576E35, crimson=#A93226, pink=#ffb8c6, purplex=#d700f7, jgreen=#007e61;
-float dlineboxX1, dlineboxY1, dlineboxX2, dlineboxY2;
+float newcanvasboxX1, newcanvasboxY1, newcanvasboxX2, newcanvasboxY2;
 boolean thickness1, thickness2, thickness3, thickness4, thickness5;
 boolean image;
 float imagebuttonX1, imagebuttonY1, imagebuttonX2, imagebuttonY2;
@@ -37,17 +37,25 @@ float circleTH3X1, circleTH3Y1, circleTH3Diameter;
 float circleTH4X1, circleTH4Y1, circleTH4Diameter;
 float circleTH5X1, circleTH5Y1, circleTH5Diameter;
 float LineThickness;
-float imageStartWidth, imageStartHeight, imageWidth, imageHeight;
-float imageWidthRatio, imageHeightRatio;
-PImage pic;
+float imageStartWidth, imageStartHeight, imageWidth, imageHeight, imageStartWidth12, imageStartHeight12, imageWidth12, imageHeight12;
+float imageWidthRatio, imageHeightRatio, imageWidthRatio12, imageHeightRatio12;
+PImage pic, pic12;
 float PauseButtonX1, PauseButtonY1, PauseButtonDiameter;
 float pbInternalX1, pbInternalY1, pbInternalX2, pbInternalY2;
 float pbInternal2X1, pbInternal2Y1, pbInternal2X2, pbInternal2Y2;
-int numberOfSongs = 1;
+int numberOfSongs = 2;
 AudioPlayer[] song = new AudioPlayer[numberOfSongs];
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 void setup() {
   size(1200, 700);
+  
+  pic12 = loadImage("https://lh3.googleusercontent.com/proxy/uGFDN1oQnxRig_rUQyD58bAC0cCIUVKNbaBPAlPkKK2spnUy1TAnh0_6M9obQMP09HIh3e9O2bDHJuHGTEJ0xLpaCU_HVL7wxxwv");
+  imageWidthRatio12 = 2633.0/1542.0;
+  imageHeightRatio12 = 2633.0/2633.0;
+  imageStartWidth12 = width*0/4;
+  imageStartHeight12 = height*0/5;
+   imageWidth12 = width*width*3/4; //Aspect Ratio
+  imageHeight12 = height*4/5;
   
    pic = loadImage("https://kidsactivitiesblog--o--com.follycdn.com/wp-content/uploads/2020/03/KAB-Anime-Coloring-Page-for-Kids-.jpg");
   imageWidthRatio = 1200.0/630.0;
@@ -59,6 +67,8 @@ void setup() {
   
   minim = new Minim(this);
   song[0] = minim.loadFile("jump man 93 - oldbandstuffs 1 (128 kbps).mp3");
+    song[1] = minim.loadFile("better mouse click sound.mp3");
+
   
   fill(0);
   background1X1 = width*3/4;
@@ -70,13 +80,13 @@ void setup() {
   background2Y1 =height*4/5;
   background2X2 = width*3/4;
   background2Y2 =height*1/5;
-
+fill(white);
   quitButtonSetup();
   drawingSurfaceX = width*0;
   drawingSurfaceY = height*0;
   drawingSurfaceWidth = width*3/4;
   drawingSurfaceHeight = height*4/5;
-  fill(255);
+  fill(white);
 
 
 
@@ -155,10 +165,10 @@ void setup() {
 
   //                                                           dotted line boxes
 
-  dlineboxX1 = width*50/64;
-  dlineboxY1 = height*8/30;
-  dlineboxX2 = 85;
-  dlineboxY2 = 55;
+  newcanvasboxX1 = width*50/64;
+  newcanvasboxY1 = height*8/30;
+  newcanvasboxX2 = 85;
+  newcanvasboxY2 = 55;
   //                                                     eraser boxes
   imagebuttonX1 = width*57/64;
   imagebuttonY1 = height*8/30;
@@ -241,6 +251,13 @@ pbInternal2X1 =width*176/200;
 pbInternal2Y1 =height*123/160;
 pbInternal2X2 = 15;
 pbInternal2Y2 = 60;
+/*
+thickness1 =  1;
+thickness2 =  3;
+thickness3 =  5;
+thickness4 =  7;
+thickness5 =  9;
+*/
   rect(drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight);
 }
 
@@ -251,7 +268,9 @@ void draw() {
   
   if (draw == true) {
     fill(ink);
+   
 strokeWeight(LineThickness);
+
     stroke(ink);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
@@ -321,10 +340,10 @@ strokeWeight(1);
   fill(white);
 
   //                                                                  dotted line boxes rect
-  rect(dlineboxX1, dlineboxY1, dlineboxX2, dlineboxY2);
+  rect(newcanvasboxX1, newcanvasboxY1, newcanvasboxX2, newcanvasboxY2);
   //                                                                         line boxes
   rect(imagebuttonX1, imagebuttonY1, imagebuttonX2, imagebuttonY2);
-  //                                                                           dotted lines
+  //                                                                           dotted lines inside of new canvas button
   ellipse(dline1X1, dline1Y1, dline1Diameter, dline1Diameter);
   ellipse(dline2X1, dline2Y1, dline2Diameter, dline2Diameter);
   ellipse(dline3X1, dline3Y1, dline3Diameter, dline3Diameter);
@@ -422,12 +441,7 @@ strokeWeight(1);
 }
 
 void mousePressed() {
-    if (image == true) {
-    rect(imageStartWidth, imageStartHeight, imageWidth, imageHeight);
-    image (pic, imageStartWidth, imageStartHeight, imageWidth, imageHeight);
-    } else {
-      image = false;
-  }
+ 
   
   quitButtonMouseClicked();
   fill(white);
@@ -443,10 +457,25 @@ void mousePressed() {
     drawingDiameter = width*1/100;
   }
 
+ if ( mouseX>width*50/64  && mouseX<width*50/64+85  && mouseY>height*8/30 && mouseY<width*50/64+55) {
+    println("clear canvas");
+    rect(drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight);
+    fill(white);
+    song[1].play();
+song[1].rewind();
+ }
+ 
   if ( mouseX>imagebuttonX1  && mouseX<imagebuttonX1+imagebuttonX2  && mouseY>imagebuttonY1 && mouseY<imagebuttonY1+imagebuttonY2) {
     println("image");
-    image = true;
+    rect(imageStartWidth12, imageStartHeight12, imageWidth12, imageHeight12);
+    image (pic, imageStartWidth, imageStartHeight, imageWidth, imageHeight);
+    song[1].play();
+song[1].rewind();
   }
+  
+ 
+  
+  
 if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox1Y1+cbox1Y2) {
     println("Black");
     whiteink=false;
@@ -464,6 +493,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=true;
+    song[1].play();
+song[1].rewind();
   }
  
   
@@ -484,6 +515,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
     
   }
   
@@ -504,6 +537,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   
   if ( mouseX>cbox4X1  && mouseX<cbox4X1+cbox4X2  && mouseY>cbox4Y1 && mouseY<cbox4Y1+cbox4Y2) {
@@ -523,6 +558,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   
   if ( mouseX>cbox5X1  && mouseX<cbox5X1+cbox5X2  && mouseY>cbox5Y1 && mouseY<cbox5Y1+cbox5Y2) {
@@ -542,6 +579,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   
   if ( mouseX>cbox6X1  && mouseX<cbox6X1+cbox6X2  && mouseY>cbox6Y1 && mouseY<cbox6Y1+cbox6Y2) {
@@ -561,6 +600,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox7X1  && mouseX<cbox7X1+cbox7X2  && mouseY>cbox7Y1 && mouseY<cbox7Y1+cbox7Y2) {
     println("Grey");
@@ -579,6 +620,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox8X1  && mouseX<cbox8X1+cbox8X2  && mouseY>cbox8Y1 && mouseY<cbox8Y1+cbox8Y2) {
     println("White");
@@ -597,6 +640,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox9X1  && mouseX<cbox9X1+cbox9X2  && mouseY>cbox9Y1 && mouseY<cbox9Y1+cbox9Y2) {
     println("Green");
@@ -615,6 +660,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox10X1  && mouseX<cbox10X1+cbox10X2  && mouseY>cbox10Y1 && mouseY<cbox10Y1+cbox10Y2) {
     println("Crimson");
@@ -633,6 +680,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox11X1  && mouseX<cbox11X1+cbox11X2  && mouseY>cbox11Y1 && mouseY<cbox11Y1+cbox11Y2) {
     println("Pink");
@@ -651,6 +700,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox12X1  && mouseX<cbox12X1+cbox12X2  && mouseY>cbox12Y1 && mouseY<cbox12Y1+cbox12Y2) {
     println("Jungle Green");
@@ -669,6 +720,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=true;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox13X1  && mouseX<cbox13X1+cbox13X2  && mouseY>cbox13Y1 && mouseY<cbox13Y1+cbox13Y2) {
     println("Purple");
@@ -687,6 +740,8 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=true;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   if ( mouseX>cbox14X1  && mouseX<cbox14X1+cbox14X2  && mouseY>cbox14Y1 && mouseY<cbox14Y1+cbox14Y2) {
     println("Brown");
@@ -705,31 +760,34 @@ if ( mouseX>cbox1X1  && mouseX<cbox1X1+cbox1X2  && mouseY>cbox1Y1 && mouseY<cbox
     purpleink=false;
     jgreenink=false;
     blackink=false;
+    song[1].play();
+song[1].rewind();
   }
   
-  if ( mouseX>lineTH1X1  && mouseX<lineTH1X1+lineTH1X2  && mouseY>lineTH1Y1 && mouseY<lineTH1Y1+lineTH1Y2); {
-  
-  LineThickness = 1;
-  
-    
+  if ( mouseX>lineTH1X1  && mouseX<lineTH1X1+lineTH1X2  && mouseY>lineTH1Y1 && mouseY<lineTH1Y1+lineTH1Y2) {
+ LineThickness = 1;
+ song[1].play();
+song[1].rewind();
   }
-  
-  if ( mouseX>lineTH2X1  && mouseX<lineTH2X1+lineTH2X2  && mouseY>lineTH2Y1 && mouseY<lineTH2Y1+lineTH2Y2); {
-
-  LineThickness = 3;
-  
+  if ( mouseX>lineTH2X1  && mouseX<lineTH2X1+lineTH2X2  && mouseY>lineTH2Y1 && mouseY<lineTH2Y1+lineTH2Y2) {
+  LineThickness = 4;
+  song[1].play();
+song[1].rewind();
   }
-  if ( mouseX>lineTH3X1  && mouseX<lineTH3X1+lineTH1X2  && mouseY>lineTH3Y1 && mouseY<lineTH3Y1+lineTH3Y2);{
-  
-  LineThickness = 5;
+  if ( mouseX>lineTH3X1  && mouseX<lineTH3X1+lineTH1X2  && mouseY>lineTH3Y1 && mouseY<lineTH3Y1+lineTH3Y2){
+  LineThickness = 6;
+  song[1].play();
+song[1].rewind();
   }
-  if ( mouseX>lineTH4X1  && mouseX<lineTH4X1+lineTH2X2  && mouseY>lineTH4Y1 && mouseY<lineTH4Y1+lineTH4Y2);{
-
-  LineThickness = 7;
+  if ( mouseX>lineTH4X1  && mouseX<lineTH4X1+lineTH2X2  && mouseY>lineTH4Y1 && mouseY<lineTH4Y1+lineTH4Y2){
+LineThickness = 8;
+song[1].play();
+song[1].rewind();
   }
-  if ( mouseX>lineTH5X1  && mouseX<lineTH5X1+lineTH2X2  && mouseY>lineTH5Y1 && mouseY<lineTH5Y1+lineTH5Y2); {
-
- LineThickness = 9;
+  if ( mouseX>lineTH5X1  && mouseX<lineTH5X1+lineTH2X2  && mouseY>lineTH5Y1 && mouseY<lineTH5Y1+lineTH5Y2) {
+LineThickness = 10;
+song[1].play();
+song[1].rewind();
   }
 //                                             PAUSE BUTTON 
 if (mouseX>width*167/200 && mouseX< width*167/200+95&& mouseY> height*119/160 && mouseY<height*119/160+95) {   //pause
